@@ -9,7 +9,9 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.log('Connected to MongoDB');
+    app.listen(process.env.PORT || 3000, () => {
+        console.log(`Server is running on port ${process.env.PORT || 3000} !!`);
+    });
 }).catch((err) => {
     console.log(err);
 })
@@ -24,9 +26,6 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000 !!');
-});
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
